@@ -29,13 +29,14 @@
 //         console.log(i)}
 
 // 4 задание
-// let key = true;
-// let documents = true;
-// let pen = true;
-// let apple = true;
-// let orange = true;
-// const shouldGoToWork = key && documents && pen && apple && orange;
-// console.log(shouldGoToWork);
+let key = true;
+let documents = true;
+let pen = true;
+let apple = false;
+let orange = true;
+const shouldGoToWork = key && documents && pen && apple && orange;
+console.log(shouldGoToWork);
+//я поменял apple с false , на true для того , чтобы проеврить работоспособность кода
 
 // 5 задание
 // const promptResult = prompt('Enter number')
@@ -72,26 +73,26 @@
 
 // 7 задание
 
-let direction = prompt('В какую сторону света ты бы хотел отправиться? (север, юг, восток, запад)');
+// let direction = prompt('В какую сторону света ты бы хотел отправиться? (север, юг, восток, запад)');
 
 
-if (direction !== null) {
+// if (direction !== null) {
  
-    switch (direction.toLowerCase().trim()) {
-        case "юг":
-            console.log("на юг пойдешь счастье найдешь");
-            break;
-        case "север":
-            console.log("на север пойдешь много денег найдешь");
-            break;
-        case "запад":
-            console.log("на запад пойдешь верного друга найдешь");
-            break;
-        case "восток":
-            console.log("на восток пойдешь разработчиком станешь");
-            break;
-        default:
-            console.log("Попробуйте еще раз");
-            break;
-    }
-}
+//     switch (direction.toLowerCase().trim()) {
+//         case "юг":
+//             console.log("на юг пойдешь счастье найдешь");
+//             break;
+//         case "север":
+//             console.log("на север пойдешь много денег найдешь");
+//             break;
+//         case "запад":
+//             console.log("на запад пойдешь верного друга найдешь");
+//             break;
+//         case "восток":
+//             console.log("на восток пойдешь разработчиком станешь");
+//             break;
+//         default:
+//             console.log("Попробуйте еще раз");
+//             break;
+//     }
+// }
