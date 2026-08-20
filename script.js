@@ -9,6 +9,16 @@ function createElementHelper(tagName, className = '', textContent = '') {
     return element;
 }
 
+function getDate() {
+    const savedTodosValue = localStorage.getItem('todos');
+    return savedTodosValue ? JSON.parse(savedTodosValue) : [];
+}
+
+
+function setDate(todosArray) {
+    localStorage.setItem('todos', JSON.stringify(todosArray));
+}
+
 
 const mainPanel = createElementHelper('div', 'todo-panel');
 const topBar = createElementHelper('div', 'top-bar');
@@ -42,7 +52,6 @@ function createTodoCard(text) {
     const now = new Date();
     dateBadge.textContent = now.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
 
-  
     rightBlock.appendChild(deleteBtn);
     rightBlock.appendChild(dateBadge);
 
@@ -50,7 +59,6 @@ function createTodoCard(text) {
     card.appendChild(textBox);
     card.appendChild(rightBlock);
 
-   
     checkBtn.addEventListener('click', function() {
         textBox.classList.toggle('done');
         checkBtn.classList.toggle('completed');
@@ -69,22 +77,28 @@ addBtn.addEventListener('click', function() {
     const text = inputField.value;
     
     if (text !== '') {
+       
         const newCard = createTodoCard(text);
         todoListContainer.appendChild(newCard);
-        const saveTodoValue = localStorage.getItem('todos');
-        const todoArray = saveTodoValue ? JSON.stringify(saveTodoValue) : [];
-        todoArray.push(text);
-        localStorage.setItem('todos', JSON.stringify(todoArray));
+        
+        
+        const todosArray = getDate();
+        
+       
+        todosArray.push(text);
+        
+    
+        setDate(todosArray);
+        
+      
         inputField.value = ''; 
     }
 });
-
 
 deleteAllBtn.addEventListener('click', function() {
     todoListContainer.innerHTML = '';
 });
 
-todoListContainer.appendChild(createTodoCard('Todo text'));
-todoListContainer.appendChild(createTodoCard('Todo text'));
 
-
+// todoListContainer.appendChild(createTodoCard('Todo text'));
+// todoListContainer.appendChild(createTodoCard('Todo text'))
