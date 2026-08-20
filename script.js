@@ -9,12 +9,13 @@ function createElementHelper(tagName, className = '', textContent = '') {
     return element;
 }
 
+
 const mainPanel = createElementHelper('div', 'todo-panel');
 const topBar = createElementHelper('div', 'top-bar');
 
 const deleteAllBtn = createElementHelper('button', 'btn-cyan', 'Delete All');
 const inputField = createElementHelper('input', 'input-field');
-inputField.placeholder = 'Enter todo ...'; // placeholder добавляем отдельно, так как он специфичен для input
+inputField.placeholder = 'Enter todo ...'; 
 
 const addBtn = createElementHelper('button', 'btn-cyan', 'Add');
 
@@ -49,11 +50,12 @@ function createTodoCard(text) {
     card.appendChild(textBox);
     card.appendChild(rightBlock);
 
- 
+   
     checkBtn.addEventListener('click', function() {
         textBox.classList.toggle('done');
         checkBtn.classList.toggle('completed');
     });
+
 
     deleteBtn.addEventListener('click', function() {
         todoListContainer.removeChild(card);
@@ -64,11 +66,15 @@ function createTodoCard(text) {
 
 
 addBtn.addEventListener('click', function() {
-    const text = inputField.value.trim();
+    const text = inputField.value;
     
     if (text !== '') {
         const newCard = createTodoCard(text);
         todoListContainer.appendChild(newCard);
+        const saveTodoValue = localStorage.getItem('todos');
+        const todoArray = saveTodoValue ? JSON.stringify(saveTodoValue) : [];
+        todoArray.push(text);
+        localStorage.setItem('todos', JSON.stringify(todoArray));
         inputField.value = ''; 
     }
 });
@@ -78,6 +84,7 @@ deleteAllBtn.addEventListener('click', function() {
     todoListContainer.innerHTML = '';
 });
 
+todoListContainer.appendChild(createTodoCard('Todo text'));
+todoListContainer.appendChild(createTodoCard('Todo text'));
 
-todoListContainer.appendChild(createTodoCard('Todo text'));
-todoListContainer.appendChild(createTodoCard('Todo text'));
+
