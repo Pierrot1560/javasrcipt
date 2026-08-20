@@ -1,7 +1,7 @@
 
 const root = document.getElementById('root');
 
-// Вспомогательная функция для быстрого создания элементов
+
 function createElementHelper(tagName, className = '', textContent = '') {
     const element = document.createElement(tagName);
     if (className) element.className = className;
@@ -9,7 +9,6 @@ function createElementHelper(tagName, className = '', textContent = '') {
     return element;
 }
 
-// Создание базовой структуры интерфейса
 const mainPanel = createElementHelper('div', 'todo-panel');
 const topBar = createElementHelper('div', 'top-bar');
 
@@ -19,7 +18,7 @@ inputField.placeholder = 'Enter todo ...'; // placeholder добавляем о�
 
 const addBtn = createElementHelper('button', 'btn-cyan', 'Add');
 
-// Сборка панели управления
+
 topBar.appendChild(deleteAllBtn);
 topBar.appendChild(inputField);
 topBar.appendChild(addBtn);
@@ -30,7 +29,7 @@ mainPanel.appendChild(topBar);
 mainPanel.appendChild(todoListContainer);
 root.appendChild(mainPanel);
 
-// Функция создания карточки задачи
+
 function createTodoCard(text) {
     const card = createElementHelper('div', 'todo-card');
     const checkBtn = createElementHelper('button', 'btn-check', '✓');
@@ -42,7 +41,7 @@ function createTodoCard(text) {
     const now = new Date();
     dateBadge.textContent = now.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
 
-    // Сборка правой части и всей карточки
+  
     rightBlock.appendChild(deleteBtn);
     rightBlock.appendChild(dateBadge);
 
@@ -50,13 +49,12 @@ function createTodoCard(text) {
     card.appendChild(textBox);
     card.appendChild(rightBlock);
 
-    // Логика переключения состояния "выполнено" через addEventListener
+ 
     checkBtn.addEventListener('click', function() {
         textBox.classList.toggle('done');
         checkBtn.classList.toggle('completed');
     });
 
-    // Логика удаления одной карточки через addEventListener
     deleteBtn.addEventListener('click', function() {
         todoListContainer.removeChild(card);
     });
@@ -64,7 +62,7 @@ function createTodoCard(text) {
     return card;
 }
 
-// Логика добавления новой задачи по кнопке "Add"
+
 addBtn.addEventListener('click', function() {
     const text = inputField.value.trim();
     
@@ -75,11 +73,11 @@ addBtn.addEventListener('click', function() {
     }
 });
 
-// Логика очистки всего списка по кнопке "Delete All"
+
 deleteAllBtn.addEventListener('click', function() {
     todoListContainer.innerHTML = '';
 });
 
-// Добавление дефолтных карточек для проверки
+
 todoListContainer.appendChild(createTodoCard('Todo text'));
 todoListContainer.appendChild(createTodoCard('Todo text'));
