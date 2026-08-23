@@ -1,7 +1,6 @@
 
 const root = document.getElementById('root');
 
-
 function createElementHelper(tagName, className = '', textContent = '') {
     const element = document.createElement(tagName);
     if (className) element.className = className;
@@ -9,16 +8,22 @@ function createElementHelper(tagName, className = '', textContent = '') {
     return element;
 }
 
-function getDate() {
-    const savedTodosValue = localStorage.getItem('todos');
-    return savedTodosValue ? JSON.parse(savedTodosValue) : [];
+
+function setData(data) {
+    
+    const jsonString = JSON.stringify(data);
+    localStorage.setItem('todos', jsonString);
 }
 
-
-function setDate(todosArray) {
-    localStorage.setItem('todos', JSON.stringify(todosArray));
+function getData() {
+    const data = localStorage.getItem('todos');
+    
+    if (data === null) {
+        return []; //
+    } else {
+        return JSON.parse(data); 
+    }
 }
-
 
 const mainPanel = createElementHelper('div', 'todo-panel');
 const topBar = createElementHelper('div', 'top-bar');
@@ -28,7 +33,6 @@ const inputField = createElementHelper('input', 'input-field');
 inputField.placeholder = 'Enter todo ...'; 
 
 const addBtn = createElementHelper('button', 'btn-cyan', 'Add');
-
 
 topBar.appendChild(deleteAllBtn);
 topBar.appendChild(inputField);
@@ -41,16 +45,22 @@ mainPanel.appendChild(todoListContainer);
 root.appendChild(mainPanel);
 
 
-function createTodoCard(text) {
+function createTodoCard(todo) {
     const card = createElementHelper('div', 'todo-card');
+    
+    card.setAttribute('data-id', todo.id);
+
     const checkBtn = createElementHelper('button', 'btn-check', '✓');
-    const textBox = createElementHelper('div', 'todo-text-box', text);
+    const textBox = createElementHelper('div', 'todo-text-box', todo.text);
     const rightBlock = createElementHelper('div', 'card-right');
     const deleteBtn = createElementHelper('button', 'btn-delete-single', 'X');
-    const dateBadge = createElementHelper('div', 'date-badge');
+    const dateBadge = createElementHelper('div', 'date-badge', todo.date);
 
-    const now = new Date();
-    dateBadge.textContent = now.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
+    
+    if (todo.isChecked === true) {
+        textBox.classList.add('done');
+        checkBtn.classList.add('completed');
+    }
 
     rightBlock.appendChild(deleteBtn);
     rightBlock.appendChild(dateBadge);
@@ -59,46 +69,103 @@ function createTodoCard(text) {
     card.appendChild(textBox);
     card.appendChild(rightBlock);
 
-    checkBtn.addEventListener('click', function() {
-        textBox.classList.toggle('done');
-        checkBtn.classList.toggle('completed');
-    });
-
-
-    deleteBtn.addEventListener('click', function() {
-        todoListContainer.removeChild(card);
-    });
-
     return card;
 }
 
 
-addBtn.addEventListener('click', function() {
-    const text = inputField.value;
+function renderTodos() {
+    todoListContainer.innerHTML = ''; 
+    const todos = getData();          
+    for (const todo of todos) {
+        const card = createTodoCard(todo); 
+        todoListContainer.appendChild(card); 
+    }
+}
+
+
+todoListContainer.addEventListener('click', function(event) {
+    const card = event.target.closest('.todo-card');
+    if (!card) return; // Если кликнули мимо карточки — выходим
+
     
-    if (text !== '') {
-       
-        const newCard = createTodoCard(text);
-        todoListContainer.appendChild(newCard);
-        
-        
-        const todosArray = getDate();
-        
-       
-        todosArray.push(text);
-        
+    const todoId = Number(card.getAttribute('data-id'));
+    const todos = getData(); 
+
+   
+    if (event.target.classList.contains('btn-check')) {
+        const textBox = card.querySelector('.todo-text-box');
+        textBox.classList.toggle('done');
+        event.target.classList.toggle('completed');
+
+
+        for (const todo of todos) {
+            if (todo.id === todoId) {
+                todo.isChecked = !todo.isChecked; 
+                break; 
+            }
+        }
+        setData(todos); 
+    }
+
     
-        setDate(todosArray);
-        
-      
-        inputField.value = ''; 
+    if (event.target.classList.contains('btn-delete-single')) {
+        todoListContainer.removeChild(card); 
+
+     
+        const updatedTodos = [];
+        for (const todo of todos) {
+            if (todo.id !== todoId) {
+                updatedTodos.push(todo); 
+            }
+        }
+        setData(updatedTodos);
     }
 });
 
-deleteAllBtn.addEventListener('click', function() {
-    todoListContainer.innerHTML = '';
+
+addBtn.addEventListener('click', function() {
+    const text = inputField.value.trim();
+
+    if (text !== '') {
+        const now = new Date();
+        
+      
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const day = now.getDate();
+        
+        
+        const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sept', 'oct', 'nov', 'dec'];
+        const monthName = months[now.getMonth()];
+
+        const formattedDate = `${hours}:${minutes} ${day} ${monthName}`;
+
+
+        const newTodo = {
+            id: Date.now(), 
+            date: formattedDate,
+            text: text,
+            isChecked: false
+        };
+
+        
+        const todos = getData();
+        todos.push(newTodo);
+        setData(todos);
+
+      
+        const newCard = createTodoCard(newTodo);
+        todoListContainer.appendChild(newCard);
+
+       
+    }
 });
 
 
-// todoListContainer.appendChild(createTodoCard('Todo text'));
-// todoListContainer.appendChild(createTodoCard('Todo text'))
+// deleteAllBtn.addEventListener('click', function() {
+//     todoListContainer.innerHTML = ''; 
+//     setData([]); 
+// }); очистка всех задач (нужна ли ?)
+
+
+renderTodos();
