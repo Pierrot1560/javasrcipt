@@ -48,17 +48,25 @@ function createTodoCard(text) {
     card.appendChild(textBox);
     card.appendChild(rightBlock);
 
-    checkBtn.addEventListener('click', function() {
-        textBox.classList.toggle('done');
-        checkBtn.classList.toggle('completed');
-    });
-
-    deleteBtn.addEventListener('click', function() {
-        todoListContainer.removeChild(card);
-    });
-
     return card;
 }
+
+todoListContainer.addEventListener('click', function(event) {
+   
+    const card = event.target.closest('.todo-card');
+    if (!card) return;
+
+    if (event.target.classList.contains('btn-check')) {
+        const textBox = card.querySelector('.todo-text-box');
+        textBox.classList.toggle('done');
+        event.target.classList.toggle('completed');
+    }
+
+    
+    if (event.target.classList.contains('btn-delete-single')) {
+        todoListContainer.removeChild(card);
+    }
+});
 
 addBtn.addEventListener('click', function() {
     const text = inputField.value.trim();
