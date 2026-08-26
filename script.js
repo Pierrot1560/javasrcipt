@@ -32,7 +32,11 @@ root.appendChild(mainPanel);
 
 function createTodoCard(text) {
     const card = createElementHelper('div', 'todo-card');
-    const checkBtn = createElementHelper('button', 'btn-check', '✓');
+    
+
+    const checkBtn = createElementHelper('input', 'btn-check');
+    checkBtn.type = 'checkbox';
+    
     const textBox = createElementHelper('div', 'todo-text-box', text);
     const rightBlock = createElementHelper('div', 'card-right');
     const deleteBtn = createElementHelper('button', 'btn-delete-single', 'X');
@@ -51,16 +55,27 @@ function createTodoCard(text) {
     return card;
 }
 
+
+todoListContainer.addEventListener('change', function(event) {
+    const card = event.target.closest('.todo-card');
+    if (!card) return;
+
+
+    if (event.target.classList.contains('btn-check')) {
+        const textBox = card.querySelector('.todo-text-box');
+        if (event.target.checked) {
+            textBox.classList.add('done');
+        } else {
+            textBox.classList.remove('done');
+        }
+    }
+});
+
 todoListContainer.addEventListener('click', function(event) {
    
     const card = event.target.closest('.todo-card');
     if (!card) return;
 
-    if (event.target.classList.contains('btn-check')) {
-        const textBox = card.querySelector('.todo-text-box');
-        textBox.classList.toggle('done');
-        event.target.classList.toggle('completed');
-    }
 
     
     if (event.target.classList.contains('btn-delete-single')) {
