@@ -8,23 +8,6 @@ function createElementHelper(tagName, className = '', textContent = '') {
     return element;
 }
 
-
-function setData(data) {
-    
-    const jsonString = JSON.stringify(data);
-    localStorage.setItem('todos', jsonString);
-}
-
-function getData() {
-    const data = localStorage.getItem('todos');
-    
-    if (data === null) {
-        return []; //
-    } else {
-        return JSON.parse(data); 
-    }
-}
-
 const mainPanel = createElementHelper('div', 'todo-panel');
 const topBar = createElementHelper('div', 'top-bar');
 
@@ -45,22 +28,54 @@ mainPanel.appendChild(todoListContainer);
 root.appendChild(mainPanel);
 
 
-function createTodoCard(todo) {
-    const card = createElementHelper('div', 'todo-card');
-    
-    card.setAttribute('data-id', todo.id);
 
-    const checkBtn = createElementHelper('button', 'btn-check', '✓');
-    const textBox = createElementHelper('div', 'todo-text-box', todo.text);
+function setData(todosArray) {
+    try {
+        localStorage.setItem('todos', JSON.stringify(todosArray));
+    } catch (error) {
+        console.error('Ошибка', error);
+    }
+}
+
+function getData() {
+    try {
+        const savedTodos = localStorage.getItem('todos');
+        if (!savedTodos) {
+            setData([]);
+            return [];
+        }
+        return JSON.parse(savedTodos);
+    } catch (error) {
+        
+        console.error('Ошибка', error);
+        setData([]);
+        return [];
+    }
+}
+
+let todos = getData();
+
+
+
+function createTodoCard(todoObj) {
+    const card = createElementHelper('div', 'todo-card');
+    card.dataset.id = todoObj.id; 
+
+    const checkBtn = createElementHelper('input', 'btn-check');
+    checkBtn.type = 'checkbox';
+    checkBtn.checked = todoObj.isChecked; 
+    
+    const textBox = createElementHelper('div', 'todo-text-box');
+    textBox.textContent = todoObj.text; 
+    
+    if (todoObj.isChecked) {
+        textBox.classList.add('done');
+    }
+
     const rightBlock = createElementHelper('div', 'card-right');
     const deleteBtn = createElementHelper('button', 'btn-delete-single', 'X');
-    const dateBadge = createElementHelper('div', 'date-badge', todo.date);
-
-    
-    if (todo.isChecked === true) {
-        textBox.classList.add('done');
-        checkBtn.classList.add('completed');
-    }
+    const dateBadge = createElementHelper('div', 'date-badge');
+    dateBadge.textContent = todoObj.date; 
 
     rightBlock.appendChild(deleteBtn);
     rightBlock.appendChild(dateBadge);
@@ -72,56 +87,51 @@ function createTodoCard(todo) {
     return card;
 }
 
-
 function renderTodos() {
-    todoListContainer.innerHTML = ''; 
-    const todos = getData();          
-    for (const todo of todos) {
-        const card = createTodoCard(todo); 
-        todoListContainer.appendChild(card); 
-    }
+    todoListContainer.innerHTML = '';
+    todos.forEach(todo => {
+        const card = createTodoCard(todo);
+        todoListContainer.appendChild(card);
+    });
 }
 
 
-todoListContainer.addEventListener('click', function(event) {
+
+todoListContainer.addEventListener('change', function(event) {
     const card = event.target.closest('.todo-card');
-    if (!card) return; // Если кликнули мимо карточки — выходим
+    if (!card) return;
 
-    
-    const todoId = Number(card.getAttribute('data-id'));
-    const todos = getData(); 
-
-   
     if (event.target.classList.contains('btn-check')) {
         const textBox = card.querySelector('.todo-text-box');
-        textBox.classList.toggle('done');
-        event.target.classList.toggle('completed');
+        const todoId = Number(card.dataset.id);
+        
+        const currentTodo = todos.find(item => item.id === todoId);
 
-
-        for (const todo of todos) {
-            if (todo.id === todoId) {
-                todo.isChecked = !todo.isChecked; 
-                break; 
-            }
+        if (event.target.checked) {
+            textBox.classList.add('done');
+            if (currentTodo) currentTodo.isChecked = true;
+        } else {
+            textBox.classList.remove('done');
+            if (currentTodo) currentTodo.isChecked = false;
         }
-        setData(todos); 
-    }
 
-    
-    if (event.target.classList.contains('btn-delete-single')) {
-        todoListContainer.removeChild(card); 
-
-     
-        const updatedTodos = [];
-        for (const todo of todos) {
-            if (todo.id !== todoId) {
-                updatedTodos.push(todo); 
-            }
-        }
-        setData(updatedTodos);
+        setData(todos);
     }
 });
 
+todoListContainer.addEventListener('click', function(event) {
+    const card = event.target.closest('.todo-card');
+    if (!card) return;
+
+    if (event.target.classList.contains('btn-delete-single')) {
+        const todoId = Number(card.dataset.id);
+        
+        todos = todos.filter(item => item.id !== todoId);
+        
+        setData(todos);
+        todoListContainer.removeChild(card);
+    }
+});
 
 addBtn.addEventListener('click', function() {
     const text = inputField.value.trim();
@@ -129,17 +139,8 @@ addBtn.addEventListener('click', function() {
     if (text !== '') {
         const now = new Date();
         
-      
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const day = now.getDate();
-        
-        
-        const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sept', 'oct', 'nov', 'dec'];
-        const monthName = months[now.getMonth()];
-
-        const formattedDate = `${hours}:${minutes} ${day} ${monthName}`;
-
+        const formattedDate = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) + ' ' +
+        now.toLocaleDateString('en-US', { day: '2-digit', month: 'short' }).toLowerCase();
 
         const newTodo = {
             id: Date.now(), 
@@ -148,24 +149,20 @@ addBtn.addEventListener('click', function() {
             isChecked: false
         };
 
-        
-        const todos = getData();
         todos.push(newTodo);
         setData(todos);
-
-      
+        
         const newCard = createTodoCard(newTodo);
         todoListContainer.appendChild(newCard);
-
-       
+        
+        inputField.value = ''; 
     }
 });
 
-
-// deleteAllBtn.addEventListener('click', function() {
-//     todoListContainer.innerHTML = ''; 
-//     setData([]); 
-// }); очистка всех задач (нужна ли ?)
-
+deleteAllBtn.addEventListener('click', function() {
+    todos = []; 
+    setData(todos); 
+    todoListContainer.innerHTML = ''; 
+});
 
 renderTodos();
