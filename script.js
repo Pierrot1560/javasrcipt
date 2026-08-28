@@ -1,12 +1,8 @@
 
-const root = document.getElementById('root');
+import { getData, setData } from './localStorage.js';
+import { createElementHelper, createTodoCard } from './DOM.js';
 
-function createElementHelper(tagName, className = '', textContent = '') {
-    const element = document.createElement(tagName);
-    if (className) element.className = className;
-    if (textContent) element.textContent = textContent;
-    return element;
-}
+const root = document.getElementById('root');
 
 const mainPanel = createElementHelper('div', 'todo-panel');
 const topBar = createElementHelper('div', 'top-bar');
@@ -28,64 +24,7 @@ mainPanel.appendChild(todoListContainer);
 root.appendChild(mainPanel);
 
 
-
-function setData(todosArray) {
-    try {
-        localStorage.setItem('todos', JSON.stringify(todosArray));
-    } catch (error) {
-        console.error('Ошибка', error);
-    }
-}
-
-function getData() {
-    try {
-        const savedTodos = localStorage.getItem('todos');
-        if (!savedTodos) {
-            setData([]);
-            return [];
-        }
-        return JSON.parse(savedTodos);
-    } catch (error) {
-        
-        console.error('Ошибка', error);
-        setData([]);
-        return [];
-    }
-}
-
 let todos = getData();
-
-
-
-function createTodoCard(todoObj) {
-    const card = createElementHelper('div', 'todo-card');
-    card.dataset.id = todoObj.id; 
-
-    const checkBtn = createElementHelper('input', 'btn-check');
-    checkBtn.type = 'checkbox';
-    checkBtn.checked = todoObj.isChecked; 
-    
-    const textBox = createElementHelper('div', 'todo-text-box');
-    textBox.textContent = todoObj.text; 
-    
-    if (todoObj.isChecked) {
-        textBox.classList.add('done');
-    }
-
-    const rightBlock = createElementHelper('div', 'card-right');
-    const deleteBtn = createElementHelper('button', 'btn-delete-single', 'X');
-    const dateBadge = createElementHelper('div', 'date-badge');
-    dateBadge.textContent = todoObj.date; 
-
-    rightBlock.appendChild(deleteBtn);
-    rightBlock.appendChild(dateBadge);
-
-    card.appendChild(checkBtn);
-    card.appendChild(textBox);
-    card.appendChild(rightBlock);
-
-    return card;
-}
 
 function renderTodos() {
     todoListContainer.innerHTML = '';
@@ -98,16 +37,17 @@ function renderTodos() {
 
 
 todoListContainer.addEventListener('change', function(event) {
-    const card = event.target.closest('.todo-card');
+    const { target } = event; 
+    const card = target.closest('.todo-card');
     if (!card) return;
 
-    if (event.target.classList.contains('btn-check')) {
+    if (target.classList.contains('btn-check')) {
         const textBox = card.querySelector('.todo-text-box');
         const todoId = Number(card.dataset.id);
         
         const currentTodo = todos.find(item => item.id === todoId);
 
-        if (event.target.checked) {
+        if (target.checked) {
             textBox.classList.add('done');
             if (currentTodo) currentTodo.isChecked = true;
         } else {
@@ -120,10 +60,11 @@ todoListContainer.addEventListener('change', function(event) {
 });
 
 todoListContainer.addEventListener('click', function(event) {
-    const card = event.target.closest('.todo-card');
+    const { target } = event; 
+    const card = target.closest('.todo-card');
     if (!card) return;
 
-    if (event.target.classList.contains('btn-delete-single')) {
+    if (target.classList.contains('btn-delete-single')) {
         const todoId = Number(card.dataset.id);
         
         todos = todos.filter(item => item.id !== todoId);
@@ -140,12 +81,12 @@ addBtn.addEventListener('click', function() {
         const now = new Date();
         
         const formattedDate = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) + ' ' +
-        now.toLocaleDateString('en-US', { day: '2-digit', month: 'short' }).toLowerCase();
+                              now.toLocaleDateString('en-US', { day: '2-digit', month: 'short' }).toLowerCase();
 
         const newTodo = {
             id: Date.now(), 
             date: formattedDate,
-            text: text,
+            text, 
             isChecked: false
         };
 
@@ -164,5 +105,6 @@ deleteAllBtn.addEventListener('click', function() {
     setData(todos); 
     todoListContainer.innerHTML = ''; 
 });
+
 
 renderTodos();
