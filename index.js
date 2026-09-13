@@ -23,7 +23,7 @@ function printTodos(todosArray){
 
     const li = document.createElement('li');
 
-    li.innerHTML= `${todo.id} ${todo.title}`;
+    li.textContent = `${todo.id} ${todo.title}`;
 
     ul.appendChild(li);
     }
