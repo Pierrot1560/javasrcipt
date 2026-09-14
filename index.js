@@ -1,37 +1,29 @@
-function getTodos(){
-    return fetch('https://jsonplaceholder.typicode.com/todos')
-    .then(response=>{
-        if(!response.ok){
-            throw new Error (`Something went wrong: ${response.status}`)
-        } 
-        return response.json()
-    })
-    .catch(error=> {
-        console.log('Error', error)
-    })
-}
+const display = document.getElementById('display');
+let pauseBtn = document.getElementById('pause-btn');
+let startBtn = document.getElementById('start-btn');
+let resetBtn = document.getElementById('reset-btn');
 
-// getTodos()
+let seconds = 0;
+let timerId = null;
 
-function printTodos(todosArray){
-    if (!todosArray) return;
+startBtn.addEventListener('click',()=>{
+    if( timerId !== null)return;
 
-    const container = document.getElementById('todo-container');
-    const ul = document.createElement('ul');
+    timerId = setInterval(()=>{
+        seconds++
+        display.innerText = 0 + seconds
+    },1000)
+})
 
-    todosArray.forEach(todo => {
+pauseBtn.addEventListener('click', ()=>{
+    clearInterval(timerId);
+    timerId = null;
 
-    const li = document.createElement('li');
+})
 
-    li.textContent = `${todo.id} ${todo.title}`;
-
-    ul.appendChild(li);
-    }
-);
-
-    container.appendChild(ul);
-}
-
-    getTodos().then(data=>{
-        printTodos(data);
-    })
+resetBtn.addEventListener('click', ()=>{
+    display.innerText= 0;
+    seconds = 0;
+    clearInterval(timerId);
+    timerId = null
+})
