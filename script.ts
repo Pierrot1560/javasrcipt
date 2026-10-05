@@ -49,8 +49,8 @@ console.log(userNames);
 
  // 3 задача 
 
-function filterUsersWithEducation(usersList: User[]): User[] {
-  return usersList.filter((user: User) => user.hasEducation);
+function filterUsersWithEducation<T extends Pick<User, 'hasEducation'>>(usersList: T[]) {
+  return usersList.filter((user: T) => user.hasEducation);
 }
 
 const educatedUsers: User[] = filterUsersWithEducation(users);
@@ -62,8 +62,8 @@ console.log(educatedUsers);
 
 //4 задача
 
-function getUsersWithAnimals(items: User[]): User[]{
-return items.filter((item : User) => !!item.animals && !!item.animals.length);
+function getUsersWithAnimals<T extends Pick<User, 'animals'>>(items: T[]){
+return items.filter((item : T) => !!item.animals && !!item.animals.length);
 
 }
 
