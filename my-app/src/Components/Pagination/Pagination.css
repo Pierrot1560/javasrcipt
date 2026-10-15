@@ -1,0 +1,29 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px 0;
+  color: #4a4a4a;
+}
+
+.pagination__arrow {
+  background: transparent;
+  border: none;
+  color: #4a4a4a;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.pagination__page {
+  cursor: pointer;
+}
+
+.pagination__page--active {
+  color: #2231aa;
+  font-weight: 700;
+}
+
+.pagination__dots {
+  color: #8d8e97;
+}

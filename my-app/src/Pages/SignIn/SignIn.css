@@ -1,0 +1,82 @@
+.sign-in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 24px;
+}
+
+.sign-in__back {
+  align-self: flex-start;
+  margin-bottom: 32px;
+  color: #8d8e97;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.sign-in__title {
+  margin: 0 0 32px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.sign-in__form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 380px;
+  padding: 24px;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+}
+
+.sign-in__label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #4a4a4a;
+}
+
+.sign-in__input {
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.sign-in__error {
+  margin-top: 4px;
+  color: #d32f2f;
+  font-size: 12px;
+}
+
+.sign-in__forgot {
+  margin-bottom: 16px;
+  color: #8d8e97;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.sign-in__submit {
+  padding: 12px;
+  background-color: #2231aa;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sign-in__footer {
+  margin: 16px 0 0;
+  color: #8d8e97;
+  font-size: 13px;
+  text-align: center;
+}
+
+.sign-in__footer a {
+  color: #2231aa;
+  text-decoration: none;
+}

@@ -1,0 +1,50 @@
+.all-posts {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.all-posts__main {
+  flex: 1;
+  padding: 32px 48px;
+}
+
+.all-posts__title {
+  margin: 0 0 16px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.all-posts__tabs {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e5e5;
+  color: #8d8e97;
+  font-size: 14px;
+}
+
+.all-posts__tab {
+  cursor: pointer;
+}
+
+.all-posts__tab--active {
+  color: #2231aa;
+  font-weight: 600;
+}
+
+.all-posts__loading {
+  color: #8d8e97;
+  font-size: 14px;
+}
+
+.all-posts__columns {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+}
+
+.all-posts__column {
+  min-width: 0;
+}

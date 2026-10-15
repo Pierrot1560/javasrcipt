@@ -1,0 +1,20 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-top: 1px solid #e5e5e5;
+  color: #8d8e97;
+  font-size: 14px;
+}
+
+.footer__left {
+  display: flex;
+  gap: 16px;
+}
+
+.footer__socials {
+  display: flex;
+  gap: 16px;
+  font-size: 18px;
+}
