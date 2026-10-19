@@ -7,7 +7,7 @@ export function useMockFetch(source: Post[], intervalMs = 2000) {
 
   useEffect(() => {
   
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    
     setPosts([]);
     setIsLoading(true);
 

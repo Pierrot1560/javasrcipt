@@ -25,21 +25,23 @@ export function AllPosts() {
           <span className="all-posts__tab">Popular</span>
         </div>
 
-        {isLoading && (
+        {isLoading ? (
           <p className="all-posts__loading">Loading posts...</p>
+        ) : (
+          <>
+            <div className="all-posts__columns">
+              <div className="all-posts__column all-posts__column--left">
+                <PostList posts={large} variant="large" />
+              </div>
+
+              <div className="all-posts__column all-posts__column--right">
+                <PostList posts={compact} variant="compact" />
+              </div>
+            </div>
+
+            <Pagination />
+          </>
         )}
-
-        <div className="all-posts__columns">
-          <div className="all-posts__column all-posts__column--left">
-            <PostList posts={large} variant="large" />
-          </div>
-
-          <div className="all-posts__column all-posts__column--right">
-            <PostList posts={compact} variant="compact" />
-          </div>
-        </div>
-
-        <Pagination />
       </main>
 
       <Footer />

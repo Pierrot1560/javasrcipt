@@ -10,11 +10,9 @@ interface PostListProps {
 export function PostList({ posts, variant = 'large' }: PostListProps) {
   return (
     <div className="post-list">
-      {posts
-        .filter((post): post is Post => Boolean(post))
-        .map((post) => (
-          <PostCard key={post.id} post={post} variant={variant} />
-        ))}
+      {posts.map((post) => (
+        <PostCard key={post.id} post={post} variant={variant} />
+      ))}
     </div>
   );
 }

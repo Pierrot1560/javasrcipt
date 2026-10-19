@@ -1,10 +1,10 @@
 import './Success.css';
 
 interface SuccessProps {
-  onGoHome: () => void;
+  onGoHomeClick: () => void;
 }
 
-export function Success({ onGoHome }: SuccessProps) {
+export function Success({ onGoHomeClick }: SuccessProps) {
   return (
     <div className="success">
       <a className="success__back" href="#">
@@ -19,7 +19,7 @@ export function Success({ onGoHome }: SuccessProps) {
           Your registration is now completed
         </p>
 
-        <button className="success__submit" onClick={onGoHome}>
+        <button className="success__submit" onClick={onGoHomeClick}>
           Go to home
         </button>
       </div>

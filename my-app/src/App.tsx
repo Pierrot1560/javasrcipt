@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="app">
       {page === 'signIn' && <SignIn onSuccess={() => setPage('success')} />}
-      {page === 'success' && <Success onGoHome={() => setPage('allPosts')} />}
+      {page === 'success' && <Success onGoHomeClick={() => setPage('allPosts')} />}
       {page === 'allPosts' && <AllPosts />}
       {page === 'selectedPost' && <SelectedPost />}
     </div>
