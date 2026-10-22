@@ -1,0 +1,28 @@
+import './Success.css';
+
+interface SuccessProps {
+  onGoHomeClick: () => void;
+}
+
+export function Success({ onGoHomeClick }: SuccessProps) {
+  return (
+    <div className="success">
+      <a className="success__back" href="#">
+        Back to home
+      </a>
+
+      <h1 className="success__title">Success</h1>
+
+      <div className="success__card">
+        <p className="success__card-title">Email confirmed</p>
+        <p className="success__card-text">
+          Your registration is now completed
+        </p>
+
+        <button className="success__submit" onClick={onGoHomeClick}>
+          Go to home
+        </button>
+      </div>
+    </div>
+  );
+}
