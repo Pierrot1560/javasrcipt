@@ -3,8 +3,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 24px;
-  border-top: 1px solid #e5e5e5;
-  color: #8d8e97;
+  border-top: 1px solid var(--border-color);;
+  color: var(--text-secondary);
   font-size: 14px;
 }
 

@@ -1,3 +1,4 @@
+
 .sign-in {
   display: flex;
   flex-direction: column;
@@ -8,7 +9,7 @@
 .sign-in__back {
   align-self: flex-start;
   margin-bottom: 32px;
-  color: #8d8e97;
+  color: var(--text-secondary);
   font-size: 14px;
   text-decoration: none;
 }
@@ -17,6 +18,7 @@
   margin: 0 0 32px;
   font-size: 32px;
   font-weight: 700;
+  color: var(--text-color);
 }
 
 .sign-in__form {
@@ -25,7 +27,7 @@
   width: 100%;
   max-width: 380px;
   padding: 24px;
-  background-color: #f3f3f3;
+  background-color: var(--button-secondary-bg);
   border-radius: 8px;
 }
 
@@ -34,15 +36,17 @@
   flex-direction: column;
   margin-bottom: 16px;
   font-size: 13px;
-  color: #4a4a4a;
+  color: var(--text-muted);
 }
 
 .sign-in__input {
   margin-top: 6px;
   padding: 10px 12px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--button-secondary-border);
   border-radius: 4px;
   font-size: 14px;
+  background-color: var(--input-bg);
+  color: var(--text-color);
 }
 
 .sign-in__error {
@@ -53,7 +57,7 @@
 
 .sign-in__forgot {
   margin-bottom: 16px;
-  color: #8d8e97;
+  color: var(--text-secondary);
   font-size: 13px;
   text-decoration: none;
 }
@@ -71,7 +75,7 @@
 
 .sign-in__footer {
   margin: 16px 0 0;
-  color: #8d8e97;
+  color: var(--text-secondary);
   font-size: 13px;
   text-align: center;
 }

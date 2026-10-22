@@ -1,3 +1,4 @@
+
 import {
   FiThumbsUp,
   FiThumbsDown,
@@ -28,12 +29,12 @@ export function SelectedPost() {
         <h1 className="selected-post__title">{selectedPost.title}</h1>
 
         {selectedPost.image && (
-  <img
-    className="selected-post__image"
-    src={selectedPost.image}
-    alt={selectedPost.title}
-  />
-)}
+          <img
+            className="selected-post__image"
+            src={selectedPost.image}
+            alt={selectedPost.title}
+          />
+        )}
         <div className="selected-post__image" />
 
         <p className="selected-post__text">{selectedPost.text}</p>

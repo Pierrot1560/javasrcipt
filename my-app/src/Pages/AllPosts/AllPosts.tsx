@@ -6,15 +6,21 @@ import { useMockFetch } from '../../Hooks/UseMockFetch';
 import { largePosts, compactPosts } from '../../Data/mockPosts';
 import './AllPosts.css';
 
-export function AllPosts() {
+interface AllPostsProps {
+  onSearchClick?: () => void;
+}
+
+export function AllPosts({ onSearchClick }: AllPostsProps) {
   const { posts: large, isLoading: loadingLarge } = useMockFetch(largePosts);
   const { posts: compact, isLoading: loadingCompact } = useMockFetch(compactPosts);
 
   const isLoading = loadingLarge || loadingCompact;
 
+  
+
   return (
     <div className="all-posts">
-      <Header />
+      <Header onSearchClick={onSearchClick} />
 
       <main className="all-posts__main">
         <h1 className="all-posts__title">Blog</h1>

@@ -1,3 +1,4 @@
+/* ИЗМЕНЕНО: цвета заменены на CSS-переменные */
 .selected-post {
   display: flex;
   flex-direction: column;
@@ -13,7 +14,7 @@
 
 .selected-post__date {
   margin: 0 0 8px;
-  color: #8d8e97;
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
@@ -22,20 +23,21 @@
   font-size: 28px;
   font-weight: 700;
   line-height: 1.3;
+  color: var(--text-color);
 }
 
 .selected-post__image {
   width: 220px;
   height: 160px;
   flex-shrink: 0;
-  background-color: #d9d9d9;
+  background-color: var(--image-placeholder);
   border-radius: 4px;
   object-fit: cover;
 }
 
 .selected-post__text {
   margin: 0 0 24px;
-  color: #4a4a4a;
+  color: var(--text-muted);
   font-size: 15px;
   line-height: 1.6;
 }
@@ -44,8 +46,8 @@
   display: flex;
   justify-content: space-between;
   padding: 16px 0;
-  border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .selected-post__reactions {
@@ -56,7 +58,7 @@
 .selected-post__icon {
   background: transparent;
   border: none;
-  color: #4a4a4a;
+  color: var(--text-muted);
   font-size: 18px;
   cursor: pointer;
 }
@@ -65,9 +67,9 @@
   align-self: flex-end;
   margin-top: 24px;
   padding: 12px 24px;
-  background-color: #f3f3f3;
-  color: #4a4a4a;
-  border: 1px solid #d9d9d9;
+  background-color: var(--button-secondary-bg);
+  color: var(--text-muted);
+  border: 1px solid var(--button-secondary-border);
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;

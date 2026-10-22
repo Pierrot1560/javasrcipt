@@ -4,13 +4,13 @@
   justify-content: center;
   gap: 12px;
   padding: 24px 0;
-  color: #4a4a4a;
+  color: var(--text-muted);
 }
 
 .pagination__arrow {
   background: transparent;
   border: none;
-  color: #4a4a4a;
+  color: var(--text-muted);
   font-size: 18px;
   cursor: pointer;
 }
@@ -25,5 +25,5 @@
 }
 
 .pagination__dots {
-  color: #8d8e97;
+  color: var(--text-secondary);;
 }

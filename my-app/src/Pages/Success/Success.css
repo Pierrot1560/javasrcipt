@@ -1,3 +1,4 @@
+
 .success {
   display: flex;
   flex-direction: column;
@@ -8,7 +9,7 @@
 .success__back {
   align-self: flex-start;
   margin-bottom: 32px;
-  color: #8d8e97;
+  color: var(--text-secondary);
   font-size: 14px;
   text-decoration: none;
 }
@@ -17,6 +18,7 @@
   margin: 0 0 32px;
   font-size: 32px;
   font-weight: 700;
+  color: var(--text-color);
 }
 
 .success__card {
@@ -25,7 +27,7 @@
   width: 100%;
   max-width: 380px;
   padding: 24px;
-  background-color: #f3f3f3;
+  background-color: var(--button-secondary-bg);
   border-radius: 8px;
 }
 
@@ -33,11 +35,12 @@
   margin: 0 0 8px;
   font-size: 15px;
   font-weight: 700;
+  color: var(--text-color);
 }
 
 .success__card-text {
   margin: 0 0 24px;
-  color: #4a4a4a;
+  color: var(--text-muted);
   font-size: 13px;
 }
 
