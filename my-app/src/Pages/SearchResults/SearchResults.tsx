@@ -5,14 +5,13 @@ import {
   FiBookmark,
   FiMoreHorizontal,
 } from 'react-icons/fi';
+import { useSearchParams } from 'react-router-dom';
 import { Header } from '../../Components/Header/Header';
 import { Footer } from '../../Components/Footer/Footer';
 import { largePosts } from '../../Data/mockPosts';
 import './SearchResults.css';
 
-interface SearchResultsProps {
-  onBackToAllPosts?: () => void;
-}
+
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -23,16 +22,18 @@ function formatDate(dateString: string): string {
   });
 }
 
-export function SearchResults({ onBackToAllPosts }: SearchResultsProps) {
+export function SearchResults() {
 
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('q') || 'Astronauts';
   const results = [...largePosts, ...largePosts].slice(0, 6);
 
   return (
     <div className="search-results">
-      <Header onLogoClick={onBackToAllPosts}  />
+      <Header />
 
       <main className="search-results__main">
-        <h1 className="search-results__title">Search results 'Astronauts'</h1>
+        <h1 className="search-results__title">Search results '{query}'</h1>
 
         <div className="search-results__list">
           {results.map((post, index) => (

@@ -1,15 +1,15 @@
+import { useNavigate, Link } from 'react-router-dom';
 import './Success.css';
 
-interface SuccessProps {
-  onGoHomeClick: () => void;
-}
 
-export function Success({ onGoHomeClick }: SuccessProps) {
+
+export function Success() {
+   const navigate = useNavigate();
   return (
     <div className="success">
-      <a className="success__back" href="#">
+      <Link className="success__back" to="/posts">
         Back to home
-      </a>
+      </Link>
 
       <h1 className="success__title">Success</h1>
 
@@ -19,7 +19,7 @@ export function Success({ onGoHomeClick }: SuccessProps) {
           Your registration is now completed
         </p>
 
-        <button className="success__submit" onClick={onGoHomeClick}>
+        <button className="success__submit" onClick={() => navigate('/posts')}>
           Go to home
         </button>
       </div>

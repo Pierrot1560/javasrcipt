@@ -1,20 +1,42 @@
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import './Pagination.css';
 
-export function Pagination() {
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
+
+export function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
   return (
     <div className="pagination">
-      <button className="pagination__arrow" aria-label="prev">
+      <button 
+        className="pagination__arrow" 
+        aria-label="prev" 
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
         <FiChevronLeft />
       </button>
 
-      <span className="pagination__page pagination__page--active">1</span>
-      <span className="pagination__page">2</span>
-      <span className="pagination__page">3</span>
-      <span className="pagination__dots">...</span>
-      <span className="pagination__page">8</span>
+      {pages.map((page) => (
+        <span
+          key={page}
+          className={`pagination__page ${page === currentPage ? 'pagination__page--active' : ''}`}
+          onClick={() => onPageChange(page)}
+        >
+          {page}
+        </span>
+      ))}
 
-      <button className="pagination__arrow" aria-label="next">
+      <button 
+        className="pagination__arrow" 
+        aria-label="next" 
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+      >
         <FiChevronRight />
       </button>
     </div>

@@ -1,15 +1,6 @@
-/* ИЗМЕНЕНО: цвета заменены на CSS-переменные */
 .selected-post {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.selected-post__main {
-  flex: 1;
   max-width: 720px;
   margin: 0 auto;
-  padding: 32px 24px;
 }
 
 .selected-post__date {
@@ -26,13 +17,15 @@
   color: var(--text-color);
 }
 
+
 .selected-post__image {
-  width: 220px;
-  height: 160px;
-  flex-shrink: 0;
+  width: 100%;
+  height: auto;
+  max-height: 400px;
   background-color: var(--image-placeholder);
   border-radius: 4px;
   object-fit: cover;
+  margin-bottom: 24px;
 }
 
 .selected-post__text {
@@ -64,7 +57,7 @@
 }
 
 .selected-post__add {
-  align-self: flex-end;
+  align-self: flex-start;
   margin-top: 24px;
   padding: 12px 24px;
   background-color: var(--button-secondary-bg);

@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import './SignIn.css';
 
-interface SignInProps {
-  onSuccess: () => void;
-}
+import { useNavigate, Link } from 'react-router-dom';
+import './SignIn.css';
 
 interface FormErrors {
   email?: string;
   password?: string;
 }
 
-export function SignIn({ onSuccess }: SignInProps) {
+export function SignIn() {
+  
+  const navigate = useNavigate();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
@@ -38,15 +39,17 @@ export function SignIn({ onSuccess }: SignInProps) {
     event.preventDefault();
 
     if (validate()) {
-      onSuccess();
+     
+      navigate('/success');
     }
   }
 
   return (
     <div className="sign-in">
-      <a className="sign-in__back" href="#">
+
+      <Link className="sign-in__back" to="/posts">
         Back to home
-      </a>
+      </Link>
 
       <h1 className="sign-in__title">Sign In</h1>
 
